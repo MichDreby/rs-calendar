@@ -14,53 +14,60 @@ const initialState = {
 };
 
 export default function navigation(state = initialState, action) {
-    let newState = Object.assign({}, state);
+    const newState = Object.assign({}, state);
     switch (action.type) {
-        case PREV_MONTH:
-            newState.dateObj = new Date(action.payload.getMonth() !== 0 ?
-                                        action.payload.getFullYear() : action.payload.getFullYear() - 1,
-                                        action.payload.getMonth() !== 0 ? action.payload.getMonth() - 1 : 11);
-            return newState;
-        case NEXT_MONTH:
-            newState.dateObj = new Date(action.payload.getMonth() !== 11 ? action.payload.getFullYear() :
-                                        action.payload.getFullYear() + 1,
-                                        action.payload.getMonth() !== 11 ? action.payload.getMonth() + 1 : 0);
-            return newState;
-        case TODAY_MONTH:
-            newState.dateObj = new Date();
-            return newState;
+    case PREV_MONTH: {
+        newState.dateObj = new Date(action.payload.getMonth() !== 0 ?
+            action.payload.getFullYear() : action.payload.getFullYear() - 1,
+            action.payload.getMonth() !== 0 ? action.payload.getMonth() - 1 : 11);
+        return newState;
+    }
 
-        case PREV_WEEK:
-            newState.dateObj = new Date(action.payload.getFullYear(),
-                                        action.payload.getMonth(),
-                                        action.payload.getDate() - 7);
-            return newState;
-        case NEXT_WEEK:
-            newState.dateObj = new Date(action.payload.getFullYear(),
-                                        action.payload.getMonth(),
-                                        action.payload.getDate() + 7);
-            return newState;
-        case TODAY_WEEK:
-                newState.dateObj = new Date();
-                return newState;
+    case NEXT_MONTH: {
+        newState.dateObj = new Date(action.payload.getMonth() !== 11 ?
+            action.payload.getFullYear() :
+            action.payload.getFullYear() + 1,
+            action.payload.getMonth() !== 11 ? action.payload.getMonth() + 1 : 0);
+        return newState;
+    }
+    case TODAY_MONTH: {
+        newState.dateObj = new Date();
+        return newState;
+    }
 
+    case PREV_WEEK: {
+        newState.dateObj = new Date(action.payload.getFullYear(),
+                                    action.payload.getMonth(),
+                                    action.payload.getDate() - 7);
+        return newState;
+    }
+    case NEXT_WEEK: {
+        newState.dateObj = new Date(action.payload.getFullYear(),
+                                    action.payload.getMonth(),
+                                    action.payload.getDate() + 7);
+        return newState;
+    }
+    case TODAY_WEEK: {
+        newState.dateObj = new Date();
+        return newState;
+    }
 
-        case NAV_TYPE:
-            // console.log(action.payload);
-            newState.navType = action.payload.navType;
-            const currentYear = new Date().getFullYear();
-            const currentMonth = new Date().getMonth();
-            const currentDay = new Date().getDate();
-            const stateYear = action.payload.dateObj.getFullYear();
-            const stateMonth = action.payload.dateObj.getMonth();
-            if (currentYear === stateYear && currentMonth === stateMonth) {
-                newState.dateObj = new Date(currentYear, currentMonth, currentDay);
-            } else {
-                newState.dateObj = new Date(stateYear, stateMonth, 1);
-            }
-            return newState;
+    case NAV_TYPE: {
+        newState.navType = action.payload.navType;
+        const currentYear = new Date().getFullYear();
+        const currentMonth = new Date().getMonth();
+        const currentDay = new Date().getDate();
+        const stateYear = action.payload.dateObj.getFullYear();
+        const stateMonth = action.payload.dateObj.getMonth();
+        if (currentYear === stateYear && currentMonth === stateMonth) {
+            newState.dateObj = new Date(currentYear, currentMonth, currentDay);
+        } else {
+            newState.dateObj = new Date(stateYear, stateMonth, 1);
+        }
+        return newState;
+    }
 
-        default:
-            return state;
+    default:
+        return state;
     }
 }

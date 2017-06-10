@@ -1,14 +1,25 @@
-
-
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 import CalendarCell from './CalendarCell';
 import isMobileDevice from '../helperFunctions/isMobileDevice';
 
 export default class CalendarRow extends Component {
-    constructor() {
-        super();
-        this.touchInitX;
+    // constructor() {
+    //     super();
+    //     this.touchInitX;
+    // }
+    componentDidMount() {
+        if (isMobileDevice() === false) {
+            this.addCellsMargin();
+        }
+    }
+    componentDidUpdate() {
+        if (isMobileDevice() === false) {
+            this.addCellsMargin();
+        }
+    }
+    touchStartHandler(event) {
+        const touchInitX = event.changedTouches[0].clientX;
+        this.touchInitX = touchInitX;
     }
     touchEndHandler(event) {
         const dateObj = this.props.dateObj;
@@ -21,48 +32,16 @@ export default class CalendarRow extends Component {
         const deltaX = endX - this.touchInitX;
         if (navType === 'month') {
             if (deltaX > 20) {
-                console.log('prev month!!!');
                 getPrevMonth(dateObj);
-            }
-            else if (deltaX < -20) {
-                console.log('next month!!!');
+            } else if (deltaX < -20) {
                 getNextMonth(dateObj);
             }
-        }
-        else if (navType === 'week') {
+        } else if (navType === 'week') {
             if (deltaX > 20) {
-                console.log('prev week!!!');
                 getPrevWeek(dateObj);
-            }
-            else if (deltaX < -20) {
-                console.log('next week!!!');
+            } else if (deltaX < -20) {
                 getNextWeek(dateObj);
             }
-        }
-        // getPrevMonth={getPrevMonth} getNextMonth={getNextMonth}
-        // getPrevWeek={getPrevWeek} getNextWeek={getNextWeek}
-        // this.removeEventListener('onTouchEnd', touchEndHandler);
-    }
-    touchStartHandler(event) {
-        const touchInitX = event.changedTouches[0].clientX;
-        this.touchInitX = touchInitX;
-    }
-
-
-
-
-
-
-
-
-    componentDidMount() {
-        if (isMobileDevice() === false) {
-            this.addCellsMargin();
-        }
-    }
-    componentDidUpdate() {
-        if (isMobileDevice() === false) {
-            this.addCellsMargin();
         }
     }
     addCellsMargin() {
@@ -72,13 +51,13 @@ export default class CalendarRow extends Component {
         [].forEach.call(clndrCellCollection, (cell, i, arr) => {
             const cellsNumb = arr.length;
             if (i !== (cellsNumb - 1)) {
-                cell.style.marginRight = clndrRowWidth * 0.03 / (cellsNumb - 1) + 'px';
+                cell.style.marginRight = `${(clndrRowWidth * 0.03) / (cellsNumb - 1)}px`;
             } else {
                 cell.style.marginBottom = '';
             }
         });
     }
-    sameDate(cellData, eventDate){
+    sameDate(cellData, eventDate) {
         const cellYear = cellData.date.getFullYear();
         const cellMonth = cellData.date.getMonth();
         const cellDay = cellData.date.getDate();
@@ -90,28 +69,30 @@ export default class CalendarRow extends Component {
     render() {
         const cellArray = this.props.cellArray;
         let cellEventObj;
-        const calendarCellCollect = cellArray.map((item, index) => {
+        const calendarCellCollect = cellArray.map((item) => {
             cellEventObj = this.props.eventObj.filter((evt) => {
-                let millisec = Date.parse(evt.start);
-                let eventDate = new Date(millisec);
+                const millisec = Date.parse(evt.start);
+                const eventDate = new Date(millisec);
                 return this.sameDate(item, eventDate);
             });
-            cellEventObj.sort((a, b) => {
-                return Date.parse(a.start) - Date.parse(b.start);
-            });
+            cellEventObj.sort((a, b) => Date.parse(a.start) - Date.parse(b.start));
             return (
-                <CalendarCell cellEventObj={cellEventObj} navType={this.props.navType}
-                    key={index} cellData={item} showEventDetails={this.props.showEventDetails}/>
+              <CalendarCell
+                cellEventObj={cellEventObj} navType={this.props.navType}
+                key={item.id} cellData={item} showEventDetails={this.props.showEventDetails}
+              />
             );
         });
 
         return (
-            <div className={'clear-fix clndr-row-' + this.props.rowsNumb}
-                ref={clndrRow => {this.clndrRow = clndrRow}}
-                onTouchStart={this.touchStartHandler.bind(this)}
-                onTouchEnd={this.touchEndHandler.bind(this)}>
-                {calendarCellCollect}
-            </div>
+          <div
+            className={`clear-fix clndr-row-${this.props.rowsNumb}`}
+            ref={(clndrRow) => { this.clndrRow = clndrRow; }}
+            onTouchStart={this.touchStartHandler.bind(this)}
+            onTouchEnd={this.touchEndHandler.bind(this)}
+          >
+            {calendarCellCollect}
+          </div>
         );
     }
 }

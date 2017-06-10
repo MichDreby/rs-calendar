@@ -9,43 +9,45 @@ import EventDetails from '../components/EventDetails';
 import { getPrevMonth, getNextMonth, getTodayMonth } from '../actions/changeMonth';
 import { getPrevWeek, getNextWeek, getTodayWeek } from '../actions/changeWeek';
 import changeNavType from '../actions/changeNavType';
-import { sendInitialRequest } from '../actions/sendInitialRequest';
-import { showEventDetails } from '../actions/showEventDetails';
-
-import isMobileDevice from '../helperFunctions/isMobileDevice';
-
+import sendInitialRequest from '../actions/sendInitialRequest';
+import showEventDetails from '../actions/showEventDetails';
 
 export class App extends Component {
-    componentDidMount(){
+    componentDidMount() {
         this.props.sendInitialRequest();
     }
     render() {
         const nav = this.props.navigation;
         const eventObj = this.props.calendarArea.eventObj;
         const cellEventObj = this.props.eventDetails.cellEventObj;
-
         const { getPrevMonth, getNextMonth, getTodayMonth,
                 getPrevWeek, getNextWeek, getTodayWeek, changeNavType,
-                showEventDetails} = this.props;
-        const clientHeight = document.documentElement.clientHeight + 'px';
-        const clientWidth = document.documentElement.clientWidth + 'px';
+                showEventDetails } = this.props;
+        const clientHeight = `${document.documentElement.clientHeight}px`;
+        const clientWidth = `${document.documentElement.clientWidth}px`;
         return (
-            <section className="rs-calendar clear-fix"
-                style={{height: clientHeight, width: clientWidth}}>
-                <div className="clndr-ctn fl-left">
-                    <Navigation dateObj={nav.dateObj} dateString={nav.getDateString()}
-                                getPrevMonth={getPrevMonth} getNextMonth={getNextMonth}
-                                getPrevWeek={getPrevWeek} getNextWeek={getNextWeek}
-                                getTodayMonth={getTodayMonth} getTodayWeek={getTodayWeek}
-                                changeNavType={changeNavType}
-                                navType={nav.navType}/>
-                    <CalendarArea dateObj={nav.dateObj} navType={nav.navType} eventObj={eventObj}
-                                  getPrevMonth={getPrevMonth} getNextMonth={getNextMonth}
-                                  getPrevWeek={getPrevWeek} getNextWeek={getNextWeek}
-                                  showEventDetails={showEventDetails}/>
-                </div>
-                <EventDetails cellEventObj={cellEventObj}/>
-            </section>
+          <section
+            className="rs-calendar clear-fix"
+            style={{ height: clientHeight, width: clientWidth }}
+          >
+            <div className="clndr-ctn fl-left">
+              <Navigation
+                dateObj={nav.dateObj} dateString={nav.getDateString()}
+                getPrevMonth={getPrevMonth} getNextMonth={getNextMonth}
+                getPrevWeek={getPrevWeek} getNextWeek={getNextWeek}
+                getTodayMonth={getTodayMonth} getTodayWeek={getTodayWeek}
+                changeNavType={changeNavType}
+                navType={nav.navType}
+              />
+              <CalendarArea
+                dateObj={nav.dateObj} navType={nav.navType} eventObj={eventObj}
+                getPrevMonth={getPrevMonth} getNextMonth={getNextMonth}
+                getPrevWeek={getPrevWeek} getNextWeek={getNextWeek}
+                showEventDetails={showEventDetails}
+              />
+            </div>
+            <EventDetails cellEventObj={cellEventObj} />
+          </section>
         );
     }
 }
@@ -55,7 +57,7 @@ function mapStateToProps(state) {
         navigation: state.navigation,
         calendarArea: state.calendarArea,
         eventDetails: state.eventDetails,
-    }
+    };
 }
 
 function mapDispatchToProps(dispatch) {
@@ -69,8 +71,7 @@ function mapDispatchToProps(dispatch) {
         changeNavType: bindActionCreators(changeNavType, dispatch),
         sendInitialRequest: bindActionCreators(sendInitialRequest, dispatch),
         showEventDetails: bindActionCreators(showEventDetails, dispatch),
-
-    }
+    };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

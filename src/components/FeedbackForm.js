@@ -19,25 +19,25 @@ export default class FeedbackForm extends Component {
     }
     formSubmitHandler(event) {
         event.preventDefault();
-        const textArea = event.target.querySelector('.feedback-content');
-        textArea.value = '';
-        textArea.placeholder = this.placeholder;
-        textArea.style.textAlign = 'center';
-        // this.render();
+        // const textArea = event.target.querySelector('.feedback-content');
+        this.textArea.value = '';
+        this.textArea.placeholder = this.placeholder;
+        this.textArea.style.textAlign = 'center';
     }
     render() {
-        // console.log('asd');
         return (
-            <div className="event-feedback">
-                <form className="feedback-form" onSubmit={this.formSubmitHandler.bind(this)}>
-                    <textarea className="feedback-content"
-                        rows="1" cols="20" placeholder={this.placeholder}
-                        name="feedback" onFocus={this.formFocusHandler.bind(this)}
-                        onBlur={this.formBlurHandler.bind(this)}>
-                    </textarea>
-                    <input className="feedback-btn" type="submit" value="send"/>
-                </form>
-            </div>
-        )
+          <div className="event-feedback">
+            <form className="feedback-form" onSubmit={this.formSubmitHandler.bind(this)}>
+              <textarea
+                className="feedback-content"
+                rows="1" cols="20" placeholder={this.placeholder}
+                name="feedback" onFocus={this.formFocusHandler.bind(this)}
+                onBlur={this.formBlurHandler.bind(this)}
+                ref={(textArea) => { this.textArea = textArea; }}
+              />
+              <input className="feedback-btn" type="submit" value="send" />
+            </form>
+          </div>
+        );
     }
 }

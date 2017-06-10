@@ -1,10 +1,10 @@
 
 
-import { SHOW_DETAILS } from '../constants/constEventDetails';
+import SHOW_DETAILS from '../constants/constEventDetails';
 
 
-export function showEventDetails(cellEventObj) {
-    return (dispatch) => dispatch({
+export default function showEventDetails(cellEventObj) {
+    return dispatch => dispatch({
         type: SHOW_DETAILS,
         payload: cellEventObj,
     });

@@ -15,12 +15,19 @@ module.exports={
 
     'rules': {
         "indent": ["error", 4],
-        "react/jsx-indent": ["error", 4],
         "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
         "jsx-a11y/href-no-hash": [ 2, {
             "components": [ "Link" ],
             "specialLink": [ "hrefLeft", "hrefRight" ]
           }],
+        "no-nested-ternary": 'off',
+        "no-unused-vars": 'off',
+        "no-restricted-syntax": 'off',
+        "react/jsx-no-bind": 'off',
+        "jsx-a11y/anchor-has-content": 'off',
+        'jsx-a11y/no-static-element-interactions': 'off',
+        "no-shadow": 'off',
+        "react/prop-types": 'off',
         "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
         'consistent-return':'off',
         'linebreak-style':'off',

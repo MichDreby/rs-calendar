@@ -1,4 +1,2 @@
-
-
 export const SEND_REQUEST = 'SEND_REQUEST';
 export const SEND_INITIAL_REQUEST = 'SEND_INITIAL_REQUEST';

@@ -12,7 +12,7 @@ import changeNavType from '../actions/changeNavType';
 import sendInitialRequest from '../actions/sendInitialRequest';
 import showEventDetails from '../actions/showEventDetails';
 
-export class App extends Component {
+class App extends Component {
     componentDidMount() {
         this.props.sendInitialRequest();
     }

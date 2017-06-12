@@ -92,7 +92,7 @@ export default class CalendarArea extends Component {
             calendarArray = this.createWeekCalendar(this.props.dateObj);
         }
         const rowsNumb = calendarArray.length;
-        const calendarRowCollect = calendarArray.map(item => (
+        const calendarRowCollect = calendarArray.map((item, index) => (
           <CalendarRow
             key={item.id} cellArray={item} rowsNumb={rowsNumb}
             eventObj={this.props.eventObj} navType={this.props.navType}

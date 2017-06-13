@@ -5,12 +5,16 @@ import { connect } from 'react-redux';
 import Navigation from '../components/Navigation';
 import CalendarArea from '../components/CalendarArea';
 import EventDetails from '../components/EventDetails';
+import Curtain from '../components/Curtain';
+import FeedbackForm from '../components/FeedbackForm';
 
 import { getPrevMonth, getNextMonth, getTodayMonth } from '../actions/changeMonth';
 import { getPrevWeek, getNextWeek, getTodayWeek } from '../actions/changeWeek';
 import changeNavType from '../actions/changeNavType';
 import sendInitialRequest from '../actions/sendInitialRequest';
 import showEventDetails from '../actions/showEventDetails';
+import changeFeedbackForm from '../actions/changeFeedbackForm';
+import submitFeedbackForm from '../actions/submitFeedbackForm';
 
 class App extends Component {
     componentDidMount() {
@@ -20,6 +24,10 @@ class App extends Component {
         const nav = this.props.navigation;
         const eventObj = this.props.calendarArea.eventObj;
         const cellEventObj = this.props.eventDetails.cellEventObj;
+        const curtainData = this.props.curtain;
+        const feedbackFormData = this.props.feedbackForm;
+        const changeFeedbackForm = this.props.changeFeedbackForm;
+        const submitFeedbackForm = this.props.submitFeedbackForm;
         const { getPrevMonth, getNextMonth, getTodayMonth,
                 getPrevWeek, getNextWeek, getTodayWeek, changeNavType,
                 showEventDetails } = this.props;
@@ -46,7 +54,13 @@ class App extends Component {
                 showEventDetails={showEventDetails}
               />
             </div>
-            <EventDetails cellEventObj={cellEventObj} />
+            <EventDetails
+              cellEventObj={cellEventObj}
+              feedbackFormData={feedbackFormData}
+              changeFeedbackForm={changeFeedbackForm}
+              submitFeedbackForm={submitFeedbackForm}
+            />
+            <Curtain curtainData={curtainData} />
           </section>
         );
     }
@@ -57,6 +71,8 @@ function mapStateToProps(state) {
         navigation: state.navigation,
         calendarArea: state.calendarArea,
         eventDetails: state.eventDetails,
+        curtain: state.curtain,
+        feedbackForm: state.feedbackForm,
     };
 }
 
@@ -71,6 +87,9 @@ function mapDispatchToProps(dispatch) {
         changeNavType: bindActionCreators(changeNavType, dispatch),
         sendInitialRequest: bindActionCreators(sendInitialRequest, dispatch),
         showEventDetails: bindActionCreators(showEventDetails, dispatch),
+        changeFeedbackForm: bindActionCreators(changeFeedbackForm, dispatch),
+        submitFeedbackForm: bindActionCreators(submitFeedbackForm, dispatch),
+
     };
 }
 

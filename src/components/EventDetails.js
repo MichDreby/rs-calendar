@@ -24,6 +24,7 @@ export default class EventDetails extends Component {
     }
     render() {
         const eventsCollection = this.props.cellEventObj;
+        const feedbackFormData = this.props.feedbackFormData;
         let eventsTemplate = [];
         let cellDate = [];
         if (eventsCollection.length !== 0) {
@@ -37,7 +38,12 @@ export default class EventDetails extends Component {
                               convertDateFromStr={this.convertDateFromStr}
                               cellEventObj={item}
                             />
-                            <FeedbackForm eventType={item.type} />
+                            <FeedbackForm
+                              eventType={item.type}
+                              feedbackFormData={feedbackFormData}
+                              changeFeedbackForm={this.props.changeFeedbackForm}
+                              submitFeedbackForm={this.props.submitFeedbackForm}
+                            />
                           </div>
                         );
                     default:
@@ -47,7 +53,12 @@ export default class EventDetails extends Component {
                               convertDateFromStr={this.convertDateFromStr}
                               cellEventObj={item}
                             />
-                            {<FeedbackForm eventType={item.type} />}
+                            <FeedbackForm
+                              eventType={item.type}
+                              feedbackFormData={feedbackFormData}
+                              changeFeedbackForm={this.props.changeFeedbackForm}
+                              submitFeedbackForm={this.props.submitFeedbackForm}
+                            />
                           </div>
                         );
                     }

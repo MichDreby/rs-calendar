@@ -22,12 +22,56 @@ input, label, textarea {
 /**********************************/
 .wrapper {
     margin: 0 auto;
-
-    /******change*******/
     width: 1366px;
 }
 /**********************************/
 .rs-calendar {
+}
+/**********************************/
+.clndr-curtain {
+    position: absolute;
+    background-color: #23587d;
+    width: 100%;
+    height: 100%;
+    transition: opacity 1s;
+}
+.clndr-curtain.hidden {
+    opacity: 0;
+
+}
+.clndr-curtain .curtain-slogan-ctn {
+    position: absolute;
+    display: inline-block;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+}
+.curtain-slogan-ctn .curtain-slogan {
+    display: inline-block;
+    color: #fff;
+    font-size: 150px;
+    font-family: 'Lato', sans-serif;
+    text-transform: uppercase;
+}
+/**********************************/
+.animated {
+  animation-duration: 1s;
+  animation-fill-mode: both;
+  animation-delay: 1s;
+}
+@keyframes fadeOutDown {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+    transform: translate3d(0, 100%, 0);
+  }
+}
+
+.fadeOutDown {
+  animation-name: fadeOutDown;
 }
 /**********************************/
 .clndr-ctn {
@@ -41,7 +85,9 @@ input, label, textarea {
     height: 5%;
     border-bottom: 1px solid #bbb;
     color: #fff;
+    background: linear-gradient(#377098, #23587d);
 }
+
 .nav-box-ctn {
     height: 100%;
 }

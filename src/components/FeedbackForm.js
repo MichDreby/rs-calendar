@@ -5,35 +5,41 @@ export default class FeedbackForm extends Component {
     constructor() {
         super();
         this.placeholder = 'Please, leave your feedback';
+        this.formSubmitHandler = this.formSubmitHandler.bind(this);
+        this.formFocusHandler = this.formFocusHandler.bind(this);
+        // this.formBlurHandler = this.formBlurHandler.bind(this);
+        this.onChangeFormHandler = this.onChangeFormHandler.bind(this);
+    }
+    onChangeFormHandler(event) {
+        this.props.changeFeedbackForm(event.currentTarget.value);
     }
     formFocusHandler(event) {
-        event.target.style.textAlign = 'left';
-        event.target.placeholder = '';
-        autosize(event.target);
+        // event.target.style.textAlign = 'left';
+        // event.target.placeholder = '';
+        autosize(event.currentTarget);
     }
-    formBlurHandler(event) {
-        if (event.target.value === '') {
-            event.target.placeholder = this.placeholder;
-            event.target.style.textAlign = 'center';
-        }
-    }
+    // formBlurHandler(event) {
+        // if (event.target.value === '') {
+            // event.target.placeholder = this.placeholder;
+            // event.target.style.textAlign = 'center';
+        // }
+    // }
     formSubmitHandler(event) {
         event.preventDefault();
-        // const textArea = event.target.querySelector('.feedback-content');
-        this.textArea.value = '';
-        this.textArea.placeholder = this.placeholder;
-        this.textArea.style.textAlign = 'center';
+        this.props.submitFeedbackForm();
     }
     render() {
+        const inputText = this.props.feedbackFormData.inputText;
         return (
           <div className="event-feedback">
-            <form className="feedback-form" onSubmit={this.formSubmitHandler.bind(this)}>
+            <form className="feedback-form" onSubmit={this.formSubmitHandler}>
               <textarea
                 className="feedback-content"
                 rows="1" cols="20" placeholder={this.placeholder}
-                name="feedback" onFocus={this.formFocusHandler.bind(this)}
-                onBlur={this.formBlurHandler.bind(this)}
-                ref={(textArea) => { this.textArea = textArea; }}
+                name="feedback" value={inputText}
+                onFocus={this.formFocusHandler}
+                onChange={this.onChangeFormHandler}
+                onBlur={this.formBlurHandler}
               />
               <input className="feedback-btn" type="submit" value="send" />
             </form>

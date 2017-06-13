@@ -3,10 +3,11 @@ import CalendarCell from './CalendarCell';
 import isMobileDevice from '../helperFunctions/isMobileDevice';
 
 export default class CalendarRow extends Component {
-    // constructor() {
-    //     super();
-    //     this.touchInitX;
-    // }
+    constructor() {
+        super();
+        this.touchStartHandler = this.touchStartHandler.bind(this);
+        this.touchEndHandler = this.touchEndHandler.bind(this);
+    }
     componentDidMount() {
         if (isMobileDevice() === false) {
             this.addCellsMargin();
@@ -88,8 +89,8 @@ export default class CalendarRow extends Component {
           <div
             className={`clear-fix clndr-row-${this.props.rowsNumb}`}
             ref={(clndrRow) => { this.clndrRow = clndrRow; }}
-            onTouchStart={this.touchStartHandler.bind(this)}
-            onTouchEnd={this.touchEndHandler.bind(this)}
+            onTouchStart={this.touchStartHandler}
+            onTouchEnd={this.touchEndHandler}
           >
             {calendarCellCollect}
           </div>

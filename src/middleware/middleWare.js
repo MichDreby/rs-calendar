@@ -1,5 +1,6 @@
 
 import { SEND_INITIAL_REQUEST, SEND_REQUEST } from '../constants/constCalendarArea';
+import START_ANIMATION from '../constants/constCurtain';
 import SHOW_DETAILS from '../constants/constEventDetails';
 
 
@@ -29,6 +30,7 @@ const middleWare = store => next => (action) => {
                 addMoreData(eventObj);
             });
             next({ type: SEND_REQUEST, payload: response });
+            next({ type: START_ANIMATION, payload: { animationTrigger: true } });
         });
         break;
     }

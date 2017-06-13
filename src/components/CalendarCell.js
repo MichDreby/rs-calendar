@@ -3,6 +3,10 @@
 import React, { Component } from 'react';
 
 export default class CalendarCell extends Component {
+    constructor() {
+        super();
+        this.cellClickHandler = this.cellClickHandler.bind(this);
+    }
     cellClickHandler() {
         const cellData = this.props.cellData;
         const cellEventObj = this.props.cellEventObj;
@@ -54,7 +58,7 @@ export default class CalendarCell extends Component {
                 navType === 'month' ? 'month-nav-type ' : 'week-nav-type '
                 }${cellData.currentDay ? 'current-day ' : ''
                 }${cellData.anotherMonth ? 'another-month ' : ''}`}
-            onClick={this.cellClickHandler.bind(this)}
+            onClick={this.cellClickHandler}
           >
             <p className="cell-date-numb absolute">{cellData.date.getDate()}</p>
             <div className="desktop-evt-ctn">

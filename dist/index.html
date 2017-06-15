@@ -9,8 +9,8 @@
     <link href="https://fonts.googleapis.com/css?family=PT+Sans:400,400i,700,700i" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Lato:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
     <link rel="stylesheet" href="fonts/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="styles.css">
-    <title>Document</title>
+    <link rel="stylesheet" href="/styles/styles.css">
+    <title>rs-calendar</title>
 </head>
 <body>
     <div id="root" class="wrapper"></div>
@@ -18,8 +18,13 @@
 
     <script>
         const root = document.getElementById('root');
-        root.style.width = document.documentElement.clientWidth + 'px';
-
+        const html = document.documentElement;
+        root.style.width = `${html.clientWidth}px`;
+        root.style.height = `${html.clientHeight}px`;
+        window.addEventListener('resize', () => {
+            root.style.width = `${html.clientWidth}px`;
+            root.style.height = `${html.clientHeight}px`;
+        })
     </script>
     <script src="bundle.js"></script>
 </body>

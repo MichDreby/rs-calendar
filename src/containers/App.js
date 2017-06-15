@@ -11,32 +11,48 @@ import FeedbackForm from '../components/FeedbackForm';
 import { getPrevMonth, getNextMonth, getTodayMonth } from '../actions/changeMonth';
 import { getPrevWeek, getNextWeek, getTodayWeek } from '../actions/changeWeek';
 import changeNavType from '../actions/changeNavType';
+import hidePastEvents from '../actions/hidePastEvents';
+import showPastEvents from '../actions/showPastEvents';
 import sendInitialRequest from '../actions/sendInitialRequest';
 import showEventDetails from '../actions/showEventDetails';
 import changeFeedbackForm from '../actions/changeFeedbackForm';
 import submitFeedbackForm from '../actions/submitFeedbackForm';
+import windowResize from '../actions/windowResize';
+
+
+import isMobileDevice from '../helperFunctions/isMobileDevice';
 
 class App extends Component {
+    constructor() {
+        super();
+        this.windowResizeHandler = this.windowResizeHandler.bind(this);
+    }
     componentDidMount() {
+        this.windowResizeHandler();
         this.props.sendInitialRequest();
+    }
+    windowResizeHandler() {
+        const html = document.documentElement;
+        window.addEventListener('resize', () => {
+            this.props.windowResize(this.props.windowSize);
+        });
     }
     render() {
         const nav = this.props.navigation;
         const eventObj = this.props.calendarArea.eventObj;
+        const calendarAreaState = this.props.calendarArea;
         const cellEventObj = this.props.eventDetails.cellEventObj;
         const curtainData = this.props.curtain;
         const feedbackFormData = this.props.feedbackForm;
-        const changeFeedbackForm = this.props.changeFeedbackForm;
-        const submitFeedbackForm = this.props.submitFeedbackForm;
         const { getPrevMonth, getNextMonth, getTodayMonth,
                 getPrevWeek, getNextWeek, getTodayWeek, changeNavType,
-                showEventDetails } = this.props;
-        const clientHeight = `${document.documentElement.clientHeight}px`;
-        const clientWidth = `${document.documentElement.clientWidth}px`;
+                showEventDetails, changeFeedbackForm, submitFeedbackForm,
+                hidePastEvents, showPastEvents } = this.props;
+        const windowSize = this.props.windowSize;
         return (
           <section
+            style={{ height: `${windowSize.clientHeight}px`, width: `${windowSize.clientWidth}px` }}
             className="rs-calendar clear-fix"
-            style={{ height: clientHeight, width: clientWidth }}
           >
             <div className="clndr-ctn fl-left">
               <Navigation
@@ -44,14 +60,15 @@ class App extends Component {
                 getPrevMonth={getPrevMonth} getNextMonth={getNextMonth}
                 getPrevWeek={getPrevWeek} getNextWeek={getNextWeek}
                 getTodayMonth={getTodayMonth} getTodayWeek={getTodayWeek}
-                changeNavType={changeNavType}
-                navType={nav.navType}
+                changeNavType={changeNavType} hidePastEvents={hidePastEvents}
+                showPastEvents={showPastEvents} navType={nav.navType}
+                showAllEvents={nav.showAllEvents} calendarAreaState={calendarAreaState}
               />
               <CalendarArea
                 dateObj={nav.dateObj} navType={nav.navType} eventObj={eventObj}
                 getPrevMonth={getPrevMonth} getNextMonth={getNextMonth}
                 getPrevWeek={getPrevWeek} getNextWeek={getNextWeek}
-                showEventDetails={showEventDetails}
+                showEventDetails={showEventDetails} windowSize={windowSize}
               />
             </div>
             <EventDetails
@@ -73,6 +90,7 @@ function mapStateToProps(state) {
         eventDetails: state.eventDetails,
         curtain: state.curtain,
         feedbackForm: state.feedbackForm,
+        windowSize: state.windowSize,
     };
 }
 
@@ -85,10 +103,13 @@ function mapDispatchToProps(dispatch) {
         getNextWeek: bindActionCreators(getNextWeek, dispatch),
         getTodayWeek: bindActionCreators(getTodayWeek, dispatch),
         changeNavType: bindActionCreators(changeNavType, dispatch),
+        hidePastEvents: bindActionCreators(hidePastEvents, dispatch),
+        showPastEvents: bindActionCreators(showPastEvents, dispatch),
         sendInitialRequest: bindActionCreators(sendInitialRequest, dispatch),
         showEventDetails: bindActionCreators(showEventDetails, dispatch),
         changeFeedbackForm: bindActionCreators(changeFeedbackForm, dispatch),
         submitFeedbackForm: bindActionCreators(submitFeedbackForm, dispatch),
+        windowResize: bindActionCreators(windowResize, dispatch),
 
     };
 }

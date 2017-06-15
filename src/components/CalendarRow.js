@@ -8,14 +8,11 @@ export default class CalendarRow extends Component {
         this.touchStartHandler = this.touchStartHandler.bind(this);
         this.touchEndHandler = this.touchEndHandler.bind(this);
     }
-    componentDidMount() {
-        if (isMobileDevice() === false) {
-            this.addCellsMargin();
-        }
-    }
-    componentDidUpdate() {
-        if (isMobileDevice() === false) {
-            this.addCellsMargin();
+    getCellMargin() {
+        if (!isMobileDevice()) {
+            const windowWidth = this.props.windowSize.clientWidth;
+            const cellMarginRight = ((windowWidth * 0.75) * 0.03) / 6;
+            return cellMarginRight;
         }
     }
     touchStartHandler(event) {
@@ -45,19 +42,6 @@ export default class CalendarRow extends Component {
             }
         }
     }
-    addCellsMargin() {
-        const clndrRow = this.clndrRow;
-        const clndrCellCollection = clndrRow.children;
-        const clndrRowWidth = parseInt(getComputedStyle(clndrRow).width);
-        [].forEach.call(clndrCellCollection, (cell, i, arr) => {
-            const cellsNumb = arr.length;
-            if (i !== (cellsNumb - 1)) {
-                cell.style.marginRight = `${(clndrRowWidth * 0.03) / (cellsNumb - 1)}px`;
-            } else {
-                cell.style.marginBottom = '';
-            }
-        });
-    }
     sameDate(cellData, eventDate) {
         const cellYear = cellData.date.getFullYear();
         const cellMonth = cellData.date.getMonth();
@@ -68,9 +52,11 @@ export default class CalendarRow extends Component {
         return (cellYear === eventYear && cellMonth === eventMonth && cellDay === eventDay);
     }
     render() {
+        const marginBottom = this.props.marginBottom;
         const cellArray = this.props.cellArray;
         let cellEventObj;
-        const calendarCellCollect = cellArray.map((item) => {
+        const calendarCellCollect = cellArray.map((item, index, arr) => {
+            const marginRight = (index === arr.length - 1 ? '' : `${this.getCellMargin()}px`);
             cellEventObj = this.props.eventObj.filter((evt) => {
                 const millisec = Date.parse(evt.start);
                 const eventDate = new Date(millisec);
@@ -79,6 +65,7 @@ export default class CalendarRow extends Component {
             cellEventObj.sort((a, b) => Date.parse(a.start) - Date.parse(b.start));
             return (
               <CalendarCell
+                marginRight={marginRight}
                 cellEventObj={cellEventObj} navType={this.props.navType}
                 key={item.id} cellData={item} showEventDetails={this.props.showEventDetails}
               />
@@ -88,6 +75,7 @@ export default class CalendarRow extends Component {
         return (
           <div
             className={`clear-fix clndr-row-${this.props.rowsNumb}`}
+            style={{ marginBottom }}
             ref={(clndrRow) => { this.clndrRow = clndrRow; }}
             onTouchStart={this.touchStartHandler}
             onTouchEnd={this.touchEndHandler}

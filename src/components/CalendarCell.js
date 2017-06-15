@@ -1,5 +1,4 @@
 
-
 import React, { Component } from 'react';
 
 export default class CalendarCell extends Component {
@@ -36,10 +35,11 @@ export default class CalendarCell extends Component {
         const cellData = this.props.cellData;
         const navType = this.props.navType;
         const cellEventObj = this.props.cellEventObj;
+        const marginRight = this.props.marginRight;
         const cellEvents = cellEventObj.map((item, index, arr) =>
             (
               <div
-                key={item.id}
+                key={item.id} onClick={this.trashEventHandler}
                 className={`cell-evt hght-${arr.length} ${item.type}-evt`}
               >
                 <h4 className="cell-evt-hdr">{item.type}</h4>
@@ -54,6 +54,7 @@ export default class CalendarCell extends Component {
         );
         return (
           <div
+            style={{ marginRight }}
             className={`clndr-cell fl-left relative ${
                 navType === 'month' ? 'month-nav-type ' : 'week-nav-type '
                 }${cellData.currentDay ? 'current-day ' : ''

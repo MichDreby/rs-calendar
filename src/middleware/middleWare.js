@@ -9,6 +9,7 @@ const middleWare = store => next => (action) => {
     case SEND_INITIAL_REQUEST: {
         const eventURL = 'http://128.199.53.150/events';
         const addMoreData = function addMoreData(eventObj) {
+            eventObj.isEventPassed = (+Date.now() > Date.parse(eventObj.start));
             if (eventObj.type === 'deadline') {
                 const maxScore = Math.ceil(Math.random() * 10) * 10;
                 const placeToPush = (Math.random() > 0.5 ?

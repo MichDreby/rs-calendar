@@ -5,3 +5,5 @@ export const PREV_WEEK = 'PREV_WEEK';
 export const NEXT_WEEK = 'NEXT_WEEK';
 export const TODAY_WEEK = 'TODAY_WEEK';
 export const NAV_TYPE = 'NAV_TYPE';
+export const HIDE_PAST_EVENTS = 'HIDE_PAST_EVENTS';
+export const SHOW_PAST_EVENTS = 'SHOW_PAST_EVENTS';

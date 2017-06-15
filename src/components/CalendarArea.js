@@ -5,16 +5,6 @@ import CalendarRow from './CalendarRow';
 import isMobileDevice from '../helperFunctions/isMobileDevice';
 
 export default class CalendarArea extends Component {
-    componentDidMount() {
-        if (isMobileDevice() === false) {
-            this.addRowsMargin();
-        }
-    }
-    componentDidUpdate() {
-        if (isMobileDevice() === false) {
-            this.addRowsMargin();
-        }
-    }
     getDateObj(date, month) {
         const cellDate = new Date(+date);
         const activeMonth = month;
@@ -30,18 +20,12 @@ export default class CalendarArea extends Component {
 
         };
     }
-    addRowsMargin() {
-        const clndrRowCtn = this.clndrRowCtn;
-        const clndrRowCtnHeight = parseInt(getComputedStyle(clndrRowCtn).height);
-        const clndrRowCollection = clndrRowCtn.children;
-        [].forEach.call(clndrRowCollection, (clndrRow, i, arr) => {
-            const rowsNumb = arr.length;
-            if (i !== (rowsNumb - 1)) {
-                clndrRow.style.marginBottom = `${((clndrRowCtnHeight * 0.05) / (rowsNumb - 1))}px`;
-            } else {
-                clndrRow.style.marginBottom = '';
-            }
-        });
+    getRowMargin(rowNumber) {
+        if (!isMobileDevice()) {
+            const windowHeight = this.props.windowSize.clientHeight;
+            const rowMarginBottom = (((windowHeight * 0.95) * 0.95) * 0.05) / (rowNumber - 1);
+            return rowMarginBottom;
+        }
     }
     createMonthCalendar(dateObj) {
         let date = new Date(dateObj.getFullYear(), dateObj.getMonth());
@@ -92,15 +76,20 @@ export default class CalendarArea extends Component {
             calendarArray = this.createWeekCalendar(this.props.dateObj);
         }
         const rowsNumb = calendarArray.length;
-        const calendarRowCollect = calendarArray.map((item, index) => (
-          <CalendarRow
-            key={item.id} cellArray={item} rowsNumb={rowsNumb}
-            eventObj={this.props.eventObj} navType={this.props.navType}
-            showEventDetails={this.props.showEventDetails} dateObj={this.props.dateObj}
-            getPrevMonth={this.props.getPrevMonth} getNextMonth={this.props.getNextMonth}
-            getPrevWeek={this.props.getPrevWeek} getNextWeek={this.props.getNextWeek}
-          />
-        ));
+        const calendarRowCollect = calendarArray.map((item, index, arr) => {
+            const rowNumber = arr.length;
+            const marginBottom = (index === rowNumber - 1 ? '' : `${this.getRowMargin(rowNumber)}px`);
+            return (
+              <CalendarRow
+                windowSize={this.props.windowSize}
+                key={item.id} marginBottom={marginBottom} cellArray={item} rowsNumb={rowsNumb}
+                eventObj={this.props.eventObj} navType={this.props.navType}
+                showEventDetails={this.props.showEventDetails} dateObj={this.props.dateObj}
+                getPrevMonth={this.props.getPrevMonth} getNextMonth={this.props.getNextMonth}
+                getPrevWeek={this.props.getPrevWeek} getNextWeek={this.props.getNextWeek}
+              />
+            );
+        });
         return (
           <div className="clndr-area">
             <CalendarHeader />

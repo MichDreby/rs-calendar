@@ -1,5 +1,6 @@
 import { PREV_MONTH, NEXT_MONTH, TODAY_MONTH,
-         PREV_WEEK, NEXT_WEEK, TODAY_WEEK, NAV_TYPE } from '../constants/constNavigation';
+         PREV_WEEK, NEXT_WEEK, TODAY_WEEK, NAV_TYPE,
+         SHOW_PAST_EVENTS, HIDE_PAST_EVENTS } from '../constants/constNavigation';
 
 const initialState = {
     dateObj: new Date(),
@@ -11,6 +12,7 @@ const initialState = {
         });
         return formatter.format(this.dateObj);
     },
+    showAllEvents: true,
 };
 
 export default function navigation(state = initialState, action) {
@@ -64,6 +66,14 @@ export default function navigation(state = initialState, action) {
         } else {
             newState.dateObj = new Date(stateYear, stateMonth, 1);
         }
+        return newState;
+    }
+    case SHOW_PAST_EVENTS: {
+        newState.showAllEvents = !action.payload.showAllEvents;
+        return newState;
+    }
+    case HIDE_PAST_EVENTS: {
+        newState.showAllEvents = !action.payload.showAllEvents;
         return newState;
     }
 

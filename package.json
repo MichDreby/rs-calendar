@@ -30,9 +30,7 @@
     "eslint-loader": "^1.7.1",
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^4.0.0",
-    "eslint-plugin-react": "^6.10.3",
-    "redux-logger": "^3.0.6",
-    "redux-thunk": "^2.2.0"
+    "eslint-plugin-react": "^6.10.3"
   },
   "dependencies": {
     "animate.css": "^3.5.2",
@@ -45,5 +43,7 @@
     "react-hot-loader": "^3.0.0-beta.7",
     "react-redux": "^5.0.5",
     "redux": "^3.6.0",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.2.0"
   }
 }

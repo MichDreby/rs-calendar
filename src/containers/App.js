@@ -8,17 +8,7 @@ import EventDetails from '../components/EventDetails';
 import Curtain from '../components/Curtain';
 import FeedbackForm from '../components/FeedbackForm';
 
-import { getPrevMonth, getNextMonth, getTodayMonth } from '../actions/changeMonth';
-import { getPrevWeek, getNextWeek, getTodayWeek } from '../actions/changeWeek';
-import changeNavType from '../actions/changeNavType';
-import hidePastEvents from '../actions/hidePastEvents';
-import showPastEvents from '../actions/showPastEvents';
-import sendInitialRequest from '../actions/sendInitialRequest';
-import showEventDetails from '../actions/showEventDetails';
-import changeFeedbackForm from '../actions/changeFeedbackForm';
-import submitFeedbackForm from '../actions/submitFeedbackForm';
-import windowResize from '../actions/windowResize';
-
+import * as actions from '../actions/actions';
 
 import isMobileDevice from '../helperFunctions/isMobileDevice';
 
@@ -96,20 +86,20 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        getPrevMonth: bindActionCreators(getPrevMonth, dispatch),
-        getNextMonth: bindActionCreators(getNextMonth, dispatch),
-        getTodayMonth: bindActionCreators(getTodayMonth, dispatch),
-        getPrevWeek: bindActionCreators(getPrevWeek, dispatch),
-        getNextWeek: bindActionCreators(getNextWeek, dispatch),
-        getTodayWeek: bindActionCreators(getTodayWeek, dispatch),
-        changeNavType: bindActionCreators(changeNavType, dispatch),
-        hidePastEvents: bindActionCreators(hidePastEvents, dispatch),
-        showPastEvents: bindActionCreators(showPastEvents, dispatch),
-        sendInitialRequest: bindActionCreators(sendInitialRequest, dispatch),
-        showEventDetails: bindActionCreators(showEventDetails, dispatch),
-        changeFeedbackForm: bindActionCreators(changeFeedbackForm, dispatch),
-        submitFeedbackForm: bindActionCreators(submitFeedbackForm, dispatch),
-        windowResize: bindActionCreators(windowResize, dispatch),
+        getPrevMonth: bindActionCreators(actions.getPrevMonth, dispatch),
+        getNextMonth: bindActionCreators(actions.getNextMonth, dispatch),
+        getTodayMonth: bindActionCreators(actions.getTodayMonth, dispatch),
+        getPrevWeek: bindActionCreators(actions.getPrevWeek, dispatch),
+        getNextWeek: bindActionCreators(actions.getNextWeek, dispatch),
+        getTodayWeek: bindActionCreators(actions.getTodayWeek, dispatch),
+        changeNavType: bindActionCreators(actions.changeNavType, dispatch),
+        hidePastEvents: bindActionCreators(actions.hidePastEvents, dispatch),
+        showPastEvents: bindActionCreators(actions.showPastEvents, dispatch),
+        sendInitialRequest: bindActionCreators(actions.sendInitialRequest, dispatch),
+        showEventDetails: bindActionCreators(actions.showEventDetails, dispatch),
+        changeFeedbackForm: bindActionCreators(actions.changeFeedbackForm, dispatch),
+        submitFeedbackForm: bindActionCreators(actions.submitFeedbackForm, dispatch),
+        windowResize: bindActionCreators(actions.windowResize, dispatch),
 
     };
 }

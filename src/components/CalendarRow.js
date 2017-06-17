@@ -29,15 +29,15 @@ export default class CalendarRow extends Component {
         const endX = event.changedTouches[0].clientX;
         const deltaX = endX - this.touchInitX;
         if (navType === 'month') {
-            if (deltaX > 20) {
+            if (deltaX > 40) {
                 getPrevMonth(dateObj);
-            } else if (deltaX < -20) {
+            } else if (deltaX < -40) {
                 getNextMonth(dateObj);
             }
         } else if (navType === 'week') {
-            if (deltaX > 20) {
+            if (deltaX > 40) {
                 getPrevWeek(dateObj);
-            } else if (deltaX < -20) {
+            } else if (deltaX < -40) {
                 getNextWeek(dateObj);
             }
         }

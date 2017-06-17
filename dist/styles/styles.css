@@ -1,3 +1,18 @@
+@font-face{
+	font-family: 'Lato';
+    font-weight: 300;
+	src: url(../fonts/Lato/Lato-Light.woff2);
+}
+@font-face{
+	font-family: 'Lato';
+    font-weight: 400;
+	src: url(../fonts/Lato/Lato-Regular.woff2);
+}
+@font-face{
+	font-family: 'Lato';
+    font-weight: 700;
+	src: url(../fonts/Lato/Lato-Bold.woff2);
+}
 * {
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
@@ -22,7 +37,6 @@ input, label, textarea {
 /**********************************/
 .wrapper {
     margin: 0 auto;
-    width: 1366px;
 }
 /**********************************/
 .rs-calendar {
@@ -268,9 +282,6 @@ input, label, textarea {
 .clndr-cell:last-child {
     border-right: none;
 }
-.clndr-cell.current-day {
-    border: 5px solid #fb7120;
-}
 
 .clndr-cell.week-nav-type {
     height: 100%;
@@ -464,6 +475,20 @@ input, label, textarea {
         cursor: pointer;
         background-color: #224e6d;
     }
+	.clndr-cell.current-day .cell-date-numb {
+		font-weight: 700;
+	}
+	.clndr-cell.current-day:after {
+		content: '';
+		display: block;
+		position: absolute;
+		right: 0px;
+		top: 0px;
+		border: 10px solid transparent;
+		border-top: 10px solid black;
+		border-right: 10px solid black;
+
+	}
 }
 @media (max-device-width:480px){
     .rs-calendar {
@@ -573,6 +598,17 @@ input, label, textarea {
     .clndr-cell.current-day {
         border: none;
     }
+	.clndr-cell.current-day:after {
+		content: '';
+		display: block;
+		position: absolute;
+		right: 0px;
+		top: 0px;
+		border: 7px solid transparent;
+		border-top: 7px solid #cc2546;
+		border-right: 7px solid #cc2546;
+
+	}
     .clndr-cell.another-month {
         opacity: 0.4;
     }
@@ -593,7 +629,6 @@ input, label, textarea {
 /********************************************/
     .event-details-ctn {
         width: 100%;
-        /* min-height: 30%; */
         height: auto;
         border: none;
         background-color: #e0e0e0;

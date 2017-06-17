@@ -92,7 +92,7 @@ export default class CalendarArea extends Component {
         });
         return (
           <div className="clndr-area">
-            <CalendarHeader />
+            <CalendarHeader windowSize={this.props.windowSize} />
             <div
               className="clndr-row-ctn"
               ref={(clndrRowCtn) => { this.clndrRowCtn = clndrRowCtn; }}
